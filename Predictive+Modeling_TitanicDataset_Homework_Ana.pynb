@@ -27,14 +27,23 @@
     },
     {
       "cell_type": "code",
-      "execution_count": 43,
+      "source": [],
+      "metadata": {
+        "id": "r39Rs-2GZK7W"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 3,
       "metadata": {
         "id": "MwgG6W3Hx752",
         "colab": {
           "base_uri": "https://localhost:8080/",
           "height": 451
         },
-        "outputId": "f37554f9-7583-4132-bc9a-361f64f54fc6"
+        "outputId": "bad45976-2734-481c-8fd9-e79781b646a5"
       },
       "outputs": [
         {
@@ -64,7 +73,7 @@
             ],
             "text/html": [
               "\n",
-              "  <div id=\"df-00869de8-3bc2-49a8-8731-47aba2633d20\" class=\"colab-df-container\">\n",
+              "  <div id=\"df-7a95af46-2d06-46fa-8e4f-799ae7422c84\" class=\"colab-df-container\">\n",
               "    <div>\n",
               "<style scoped>\n",
               "    .dataframe tbody tr th:only-of-type {\n",
@@ -179,7 +188,7 @@
               "    <div class=\"colab-df-buttons\">\n",
               "\n",
               "  <div class=\"colab-df-container\">\n",
-              "    <button class=\"colab-df-convert\" onclick=\"convertToInteractive('df-00869de8-3bc2-49a8-8731-47aba2633d20')\"\n",
+              "    <button class=\"colab-df-convert\" onclick=\"convertToInteractive('df-7a95af46-2d06-46fa-8e4f-799ae7422c84')\"\n",
               "            title=\"Convert this dataframe to an interactive table.\"\n",
               "            style=\"display:none;\">\n",
               "\n",
@@ -231,12 +240,12 @@
               "\n",
               "    <script>\n",
               "      const buttonEl =\n",
-              "        document.querySelector('#df-00869de8-3bc2-49a8-8731-47aba2633d20 button.colab-df-convert');\n",
+              "        document.querySelector('#df-7a95af46-2d06-46fa-8e4f-799ae7422c84 button.colab-df-convert');\n",
               "      buttonEl.style.display =\n",
               "        google.colab.kernel.accessAllowed ? 'block' : 'none';\n",
               "\n",
               "      async function convertToInteractive(key) {\n",
-              "        const element = document.querySelector('#df-00869de8-3bc2-49a8-8731-47aba2633d20');\n",
+              "        const element = document.querySelector('#df-7a95af46-2d06-46fa-8e4f-799ae7422c84');\n",
               "        const dataTable =\n",
               "          await google.colab.kernel.invokeFunction('convertToInteractive',\n",
               "                                                    [key], {});\n",
@@ -266,7 +275,7 @@
             }
           },
           "metadata": {},
-          "execution_count": 43
+          "execution_count": 3
         }
       ],
       "source": [
@@ -292,7 +301,7 @@
         "# Load the Titanic dataset. First we need to upload\n",
         "# Files\n",
         "# Upload\n",
-        "# Titanic-Dataset.csv\n",
+        "# titanic.csv\n",
         "# data = pd.read_csv('Titanic-Dataset.csv')\n",
         "data = pd.read_csv('titanic.csv')\n",
         "data.head()"
@@ -310,9 +319,9 @@
           "base_uri": "https://localhost:8080/"
         },
         "id": "SqdQZWIY_XRy",
-        "outputId": "e634b339-c464-4d8a-ee2c-9496a891f723"
+        "outputId": "950721d9-bdbd-4c2f-cf6c-d34c5a44215d"
       },
-      "execution_count": 44,
+      "execution_count": 4,
       "outputs": [
         {
           "output_type": "stream",
@@ -355,9 +364,9 @@
           "base_uri": "https://localhost:8080/"
         },
         "id": "Y5rvW85a_d8A",
-        "outputId": "8869b3b5-31d6-4224-d6d1-dff65b4961e5"
+        "outputId": "585e6ad0-ccdd-448f-e994-28905054c62d"
       },
-      "execution_count": 45,
+      "execution_count": 5,
       "outputs": [
         {
           "output_type": "stream",
@@ -388,9 +397,9 @@
           "height": 472
         },
         "id": "yakqVj15_Y3y",
-        "outputId": "5e6d455f-feef-4bb9-ef9f-39f1d725dc20"
+        "outputId": "2de934b7-df7e-42df-a374-c31441954abe"
       },
-      "execution_count": 46,
+      "execution_count": 6,
       "outputs": [
         {
           "output_type": "display_data",
@@ -432,9 +441,9 @@
           "height": 743
         },
         "id": "yKwsMO_XJj_j",
-        "outputId": "d901ffc4-2616-4075-af89-3687d22c5b52"
+        "outputId": "81f9b78f-cd4f-48f0-d2ef-0cea8d1feed8"
       },
-      "execution_count": 47,
+      "execution_count": 7,
       "outputs": [
         {
           "output_type": "stream",
@@ -475,17 +484,22 @@
         "# Handle missing values (example: filling missing age values with the mean)\n",
         "data['Age'].fillna(data['Age'].mean(), inplace=True)\n",
         "\n",
-        "# Address outliers (example: remove outliers in fare column using Z-score)\n",
-        "z_score = (data['Fare'] - data['Fare'].mean()) / data['Fare'].std()\n",
-        "data = data.loc[z_score.abs() < 3]\n",
         "\n",
         "# Handle categorical variables (example: one-hot encoding for 'Sex' column)\n",
-        "# data_encoded = pd.get_dummies(data, columns=['Sex'])\n",
         "# we do it later\n",
+        "# data_encoded = pd.get_dummies(data, columns=['Sex'])\n",
+        "data_encoded = data\n",
+        "\n",
         "\n",
         "# Perform feature scaling (example: standardization of 'Age' and 'Fare' columns)\n",
         "data_encoded['Age'] = (data_encoded['Age'] - data_encoded['Age'].mean()) / data_encoded['Age'].std()\n",
         "data_encoded['Fare'] = (data_encoded['Fare'] - data_encoded['Fare'].mean()) / data_encoded['Fare'].std()\n",
+        "# Address outliers (example: remove outliers in fare column using Z-score)\n",
+        "Fare_z_score = (data['Fare'] - data['Fare'].mean()) / data['Fare'].std()\n",
+        "data = data.loc[Fare_z_score.abs() < 3]\n",
+        "\n",
+        "# we drop \"Fare\" column because we will use Fare_z_score\n",
+        "data_encoded = data_encoded.drop(columns=['Fare'])\n",
         "\n",
         "# Final preprocessed dataset\n",
         "print(\"\\nPreprocessed dataset:\")\n",
@@ -497,10 +511,10 @@
           "base_uri": "https://localhost:8080/"
         },
         "id": "u8FbA7iU_v6U",
-        "outputId": "c24b119e-a767-404f-8648-95d4ee3353d1",
+        "outputId": "c41e50b8-89eb-4b22-977a-6313cf394057",
         "collapsed": true
       },
-      "execution_count": 48,
+      "execution_count": 11,
       "outputs": [
         {
           "output_type": "stream",
@@ -508,53 +522,85 @@
           "text": [
             "\n",
             "Preprocessed dataset:\n",
-            "   PassengerId  Survived  Pclass  \\\n",
-            "0          892         0       3   \n",
-            "1          893         1       3   \n",
-            "2          894         0       2   \n",
-            "3          895         0       3   \n",
-            "4          896         1       3   \n",
+            "   PassengerId  Survived  Pclass       Age  SibSp  Parch      Fare  \\\n",
+            "0          892         0       3  0.426031      0      0 -0.692862   \n",
+            "1          893         1       3  1.470615      1      0 -0.732115   \n",
+            "2          894         0       2  2.724117      0      0 -0.604892   \n",
+            "3          895         0       3 -0.200720      0      0 -0.653414   \n",
+            "4          896         1       3 -0.618554      1      1 -0.481810   \n",
             "\n",
-            "                                           Name       Age  SibSp  Parch  \\\n",
-            "0                              Kelly, Mr. James  0.405618      0      0   \n",
-            "1              Wilkes, Mrs. James (Ellen Needs)  1.437478      1      0   \n",
-            "2                     Myles, Mr. Thomas Francis  2.675709      0      0   \n",
-            "3                              Wirz, Mr. Albert -0.213498      0      0   \n",
-            "4  Hirvonen, Mrs. Alexander (Helga E Lindqvist) -0.626242      1      1   \n",
+            "   Name_Abbott, Master. Eugene Joseph  Name_Abelseth, Miss. Karen Marie  \\\n",
+            "0                               False                             False   \n",
+            "1                               False                             False   \n",
+            "2                               False                             False   \n",
+            "3                               False                             False   \n",
+            "4                               False                             False   \n",
             "\n",
-            "    Ticket      Fare Cabin Embarked  Sex_female  Sex_male  \n",
-            "0   330911 -0.621569   NaN        Q       False      True  \n",
-            "1   363272 -0.650192   NaN        S        True     False  \n",
-            "2   240276 -0.557424   NaN        Q       False      True  \n",
-            "3   315154 -0.592805   NaN        S       False      True  \n",
-            "4  3101298 -0.467676   NaN        S        True     False  \n",
-            "   PassengerId  Survived  Pclass  \\\n",
-            "0          892         0       3   \n",
-            "1          893         1       3   \n",
-            "2          894         0       2   \n",
-            "3          895         0       3   \n",
-            "4          896         1       3   \n",
+            "   Name_Abelseth, Mr. Olaus Jorgensen  ...  Cabin_F E46  Cabin_F E57  \\\n",
+            "0                               False  ...        False        False   \n",
+            "1                               False  ...        False        False   \n",
+            "2                               False  ...        False        False   \n",
+            "3                               False  ...        False        False   \n",
+            "4                               False  ...        False        False   \n",
             "\n",
-            "                                           Name     Sex   Age  SibSp  Parch  \\\n",
-            "0                              Kelly, Mr. James    male  34.5      0      0   \n",
-            "1              Wilkes, Mrs. James (Ellen Needs)  female  47.0      1      0   \n",
-            "2                     Myles, Mr. Thomas Francis    male  62.0      0      0   \n",
-            "3                              Wirz, Mr. Albert    male  27.0      0      0   \n",
-            "4  Hirvonen, Mrs. Alexander (Helga E Lindqvist)  female  22.0      1      1   \n",
+            "   Cabin_F G63  Cabin_F2  Cabin_F33  Cabin_F4  Cabin_G6  Embarked_C  \\\n",
+            "0        False     False      False     False     False       False   \n",
+            "1        False     False      False     False     False       False   \n",
+            "2        False     False      False     False     False       False   \n",
+            "3        False     False      False     False     False       False   \n",
+            "4        False     False      False     False     False       False   \n",
             "\n",
-            "    Ticket     Fare Cabin Embarked  \n",
-            "0   330911   7.8292   NaN        Q  \n",
-            "1   363272   7.0000   NaN        S  \n",
-            "2   240276   9.6875   NaN        Q  \n",
-            "3   315154   8.6625   NaN        S  \n",
-            "4  3101298  12.2875   NaN        S  \n"
+            "   Embarked_Q  Embarked_S  \n",
+            "0        True       False  \n",
+            "1       False        True  \n",
+            "2        True       False  \n",
+            "3       False        True  \n",
+            "4       False        True  \n",
+            "\n",
+            "[5 rows x 806 columns]\n",
+            "   PassengerId  Survived  Pclass       Age  SibSp  Parch      Fare  \\\n",
+            "0          892         0       3  0.426031      0      0 -0.692862   \n",
+            "1          893         1       3  1.470615      1      0 -0.732115   \n",
+            "2          894         0       2  2.724117      0      0 -0.604892   \n",
+            "3          895         0       3 -0.200720      0      0 -0.653414   \n",
+            "4          896         1       3 -0.618554      1      1 -0.481810   \n",
+            "\n",
+            "   Name_Abbott, Master. Eugene Joseph  Name_Abelseth, Miss. Karen Marie  \\\n",
+            "0                               False                             False   \n",
+            "1                               False                             False   \n",
+            "2                               False                             False   \n",
+            "3                               False                             False   \n",
+            "4                               False                             False   \n",
+            "\n",
+            "   Name_Abelseth, Mr. Olaus Jorgensen  ...  Cabin_F E46  Cabin_F E57  \\\n",
+            "0                               False  ...        False        False   \n",
+            "1                               False  ...        False        False   \n",
+            "2                               False  ...        False        False   \n",
+            "3                               False  ...        False        False   \n",
+            "4                               False  ...        False        False   \n",
+            "\n",
+            "   Cabin_F G63  Cabin_F2  Cabin_F33  Cabin_F4  Cabin_G6  Embarked_C  \\\n",
+            "0        False     False      False     False     False       False   \n",
+            "1        False     False      False     False     False       False   \n",
+            "2        False     False      False     False     False       False   \n",
+            "3        False     False      False     False     False       False   \n",
+            "4        False     False      False     False     False       False   \n",
+            "\n",
+            "   Embarked_Q  Embarked_S  \n",
+            "0        True       False  \n",
+            "1       False        True  \n",
+            "2        True       False  \n",
+            "3       False        True  \n",
+            "4       False        True  \n",
+            "\n",
+            "[5 rows x 806 columns]\n"
           ]
         },
         {
           "output_type": "stream",
           "name": "stderr",
           "text": [
-            "/tmp/ipykernel_218/119023333.py:2: FutureWarning: A value is trying to be set on a copy of a DataFrame or Series through chained assignment using an inplace method.\n",
+            "/tmp/ipykernel_402/128346553.py:2: FutureWarning: A value is trying to be set on a copy of a DataFrame or Series through chained assignment using an inplace method.\n",
             "The behavior will change in pandas 3.0. This inplace method will never work because the intermediate object on which we are setting values always behaves as a copy.\n",
             "\n",
             "For example, when doing 'df[col].method(value, inplace=True)', try using 'df.method({col: value}, inplace=True)' or df[col] = df[col].method(value) instead, to perform the operation inplace on the original object.\n",
@@ -587,43 +633,50 @@
         "colab": {
           "base_uri": "https://localhost:8080/"
         },
-        "outputId": "cd07e575-e3a5-42c8-da3f-e93b71476a46"
+        "outputId": "17bcc88f-9451-403d-9b8e-86eb6d291bde"
       },
-      "execution_count": 49,
+      "execution_count": 10,
       "outputs": [
         {
           "output_type": "stream",
           "name": "stdout",
           "text": [
             "   PassengerId  Survived  Pclass       Age  SibSp  Parch      Fare  \\\n",
-            "0          892         0       3  0.405618      0      0 -0.621569   \n",
-            "1          893         1       3  1.437478      1      0 -0.650192   \n",
-            "2          894         0       2  2.675709      0      0 -0.557424   \n",
-            "3          895         0       3 -0.213498      0      0 -0.592805   \n",
-            "4          896         1       3 -0.626242      1      1 -0.467676   \n",
+            "0          892         0       3  0.426031      0      0 -0.692862   \n",
+            "1          893         1       3  1.470615      1      0 -0.732115   \n",
+            "2          894         0       2  2.724117      0      0 -0.604892   \n",
+            "3          895         0       3 -0.200720      0      0 -0.653414   \n",
+            "4          896         1       3 -0.618554      1      1 -0.481810   \n",
             "\n",
-            "   Sex_female  Sex_male  Name_Abbott, Master. Eugene Joseph  ...  Cabin_F E46  \\\n",
-            "0       False      True                               False  ...        False   \n",
-            "1        True     False                               False  ...        False   \n",
-            "2       False      True                               False  ...        False   \n",
-            "3       False      True                               False  ...        False   \n",
-            "4        True     False                               False  ...        False   \n",
+            "   Name_Abbott, Master. Eugene Joseph  Name_Abelseth, Miss. Karen Marie  \\\n",
+            "0                               False                             False   \n",
+            "1                               False                             False   \n",
+            "2                               False                             False   \n",
+            "3                               False                             False   \n",
+            "4                               False                             False   \n",
             "\n",
-            "   Cabin_F E57  Cabin_F G63  Cabin_F2  Cabin_F33  Cabin_F4  Cabin_G6  \\\n",
-            "0        False        False     False      False     False     False   \n",
-            "1        False        False     False      False     False     False   \n",
-            "2        False        False     False      False     False     False   \n",
-            "3        False        False     False      False     False     False   \n",
-            "4        False        False     False      False     False     False   \n",
+            "   Name_Abelseth, Mr. Olaus Jorgensen  ...  Cabin_F E46  Cabin_F E57  \\\n",
+            "0                               False  ...        False        False   \n",
+            "1                               False  ...        False        False   \n",
+            "2                               False  ...        False        False   \n",
+            "3                               False  ...        False        False   \n",
+            "4                               False  ...        False        False   \n",
             "\n",
-            "   Embarked_C  Embarked_Q  Embarked_S  \n",
-            "0       False        True       False  \n",
-            "1       False       False        True  \n",
-            "2       False        True       False  \n",
-            "3       False       False        True  \n",
-            "4       False       False        True  \n",
+            "   Cabin_F G63  Cabin_F2  Cabin_F33  Cabin_F4  Cabin_G6  Embarked_C  \\\n",
+            "0        False     False      False     False     False       False   \n",
+            "1        False     False      False     False     False       False   \n",
+            "2        False     False      False     False     False       False   \n",
+            "3        False     False      False     False     False       False   \n",
+            "4        False     False      False     False     False       False   \n",
             "\n",
-            "[5 rows x 830 columns]\n"
+            "   Embarked_Q  Embarked_S  \n",
+            "0        True       False  \n",
+            "1       False        True  \n",
+            "2        True       False  \n",
+            "3       False        True  \n",
+            "4       False        True  \n",
+            "\n",
+            "[5 rows x 806 columns]\n"
           ]
         }
       ]
