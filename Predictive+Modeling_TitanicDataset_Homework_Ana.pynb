@@ -27,14 +27,14 @@
     },
     {
       "cell_type": "code",
-      "execution_count": 29,
+      "execution_count": 43,
       "metadata": {
         "id": "MwgG6W3Hx752",
         "colab": {
           "base_uri": "https://localhost:8080/",
           "height": 451
         },
-        "outputId": "e6dd3d2a-8bce-4bd9-faf3-084a5e98465d"
+        "outputId": "f37554f9-7583-4132-bc9a-361f64f54fc6"
       },
       "outputs": [
         {
@@ -64,7 +64,7 @@
             ],
             "text/html": [
               "\n",
-              "  <div id=\"df-97bbc6ac-03d5-45ce-bd2c-c3faf5586435\" class=\"colab-df-container\">\n",
+              "  <div id=\"df-00869de8-3bc2-49a8-8731-47aba2633d20\" class=\"colab-df-container\">\n",
               "    <div>\n",
               "<style scoped>\n",
               "    .dataframe tbody tr th:only-of-type {\n",
@@ -179,7 +179,7 @@
               "    <div class=\"colab-df-buttons\">\n",
               "\n",
               "  <div class=\"colab-df-container\">\n",
-              "    <button class=\"colab-df-convert\" onclick=\"convertToInteractive('df-97bbc6ac-03d5-45ce-bd2c-c3faf5586435')\"\n",
+              "    <button class=\"colab-df-convert\" onclick=\"convertToInteractive('df-00869de8-3bc2-49a8-8731-47aba2633d20')\"\n",
               "            title=\"Convert this dataframe to an interactive table.\"\n",
               "            style=\"display:none;\">\n",
               "\n",
@@ -231,12 +231,12 @@
               "\n",
               "    <script>\n",
               "      const buttonEl =\n",
-              "        document.querySelector('#df-97bbc6ac-03d5-45ce-bd2c-c3faf5586435 button.colab-df-convert');\n",
+              "        document.querySelector('#df-00869de8-3bc2-49a8-8731-47aba2633d20 button.colab-df-convert');\n",
               "      buttonEl.style.display =\n",
               "        google.colab.kernel.accessAllowed ? 'block' : 'none';\n",
               "\n",
               "      async function convertToInteractive(key) {\n",
-              "        const element = document.querySelector('#df-97bbc6ac-03d5-45ce-bd2c-c3faf5586435');\n",
+              "        const element = document.querySelector('#df-00869de8-3bc2-49a8-8731-47aba2633d20');\n",
               "        const dataTable =\n",
               "          await google.colab.kernel.invokeFunction('convertToInteractive',\n",
               "                                                    [key], {});\n",
@@ -266,10 +266,18 @@
             }
           },
           "metadata": {},
-          "execution_count": 29
+          "execution_count": 43
         }
       ],
       "source": [
+        "# Objective: predict the survival for Titanic dataset\n",
+        "# The ML models:\n",
+        "# Initialize and train different models\n",
+        "# Supervised models\n",
+        "# Regression (Logistic regression)\n",
+        "#  Classification (Decision tree and SVM)\n",
+        "#  Ensemble methods (random forest)\n",
+        "\n",
         "# Import the necessary libraries\n",
         "import pandas as pd\n",
         "from sklearn.model_selection import train_test_split\n",
@@ -302,9 +310,9 @@
           "base_uri": "https://localhost:8080/"
         },
         "id": "SqdQZWIY_XRy",
-        "outputId": "f1840cf6-4269-45a9-c39d-5cd501ee6f71"
+        "outputId": "e634b339-c464-4d8a-ee2c-9496a891f723"
       },
-      "execution_count": 30,
+      "execution_count": 44,
       "outputs": [
         {
           "output_type": "stream",
@@ -347,9 +355,9 @@
           "base_uri": "https://localhost:8080/"
         },
         "id": "Y5rvW85a_d8A",
-        "outputId": "da1f1699-6ea3-4115-bd75-3257c4ee4115"
+        "outputId": "8869b3b5-31d6-4224-d6d1-dff65b4961e5"
       },
-      "execution_count": 31,
+      "execution_count": 45,
       "outputs": [
         {
           "output_type": "stream",
@@ -380,9 +388,9 @@
           "height": 472
         },
         "id": "yakqVj15_Y3y",
-        "outputId": "6e65312c-9355-4968-dce3-d12f2e191d2e"
+        "outputId": "5e6d455f-feef-4bb9-ef9f-39f1d725dc20"
       },
-      "execution_count": 32,
+      "execution_count": 46,
       "outputs": [
         {
           "output_type": "display_data",
@@ -424,9 +432,9 @@
           "height": 743
         },
         "id": "yKwsMO_XJj_j",
-        "outputId": "f22ba9da-25df-4743-acd6-453a872843f2"
+        "outputId": "d901ffc4-2616-4075-af89-3687d22c5b52"
       },
-      "execution_count": 33,
+      "execution_count": 47,
       "outputs": [
         {
           "output_type": "stream",
@@ -472,7 +480,8 @@
         "data = data.loc[z_score.abs() < 3]\n",
         "\n",
         "# Handle categorical variables (example: one-hot encoding for 'Sex' column)\n",
-        "data_encoded = pd.get_dummies(data, columns=['Sex'])\n",
+        "# data_encoded = pd.get_dummies(data, columns=['Sex'])\n",
+        "# we do it later\n",
         "\n",
         "# Perform feature scaling (example: standardization of 'Age' and 'Fare' columns)\n",
         "data_encoded['Age'] = (data_encoded['Age'] - data_encoded['Age'].mean()) / data_encoded['Age'].std()\n",
@@ -488,10 +497,10 @@
           "base_uri": "https://localhost:8080/"
         },
         "id": "u8FbA7iU_v6U",
-        "outputId": "d043d891-1ff0-4a6e-f48f-c38eeaeb7705",
+        "outputId": "c24b119e-a767-404f-8648-95d4ee3353d1",
         "collapsed": true
       },
-      "execution_count": 34,
+      "execution_count": 48,
       "outputs": [
         {
           "output_type": "stream",
@@ -545,7 +554,7 @@
           "output_type": "stream",
           "name": "stderr",
           "text": [
-            "/tmp/ipykernel_218/3683783767.py:2: FutureWarning: A value is trying to be set on a copy of a DataFrame or Series through chained assignment using an inplace method.\n",
+            "/tmp/ipykernel_218/119023333.py:2: FutureWarning: A value is trying to be set on a copy of a DataFrame or Series through chained assignment using an inplace method.\n",
             "The behavior will change in pandas 3.0. This inplace method will never work because the intermediate object on which we are setting values always behaves as a copy.\n",
             "\n",
             "For example, when doing 'df[col].method(value, inplace=True)', try using 'df.method({col: value}, inplace=True)' or df[col] = df[col].method(value) instead, to perform the operation inplace on the original object.\n",
@@ -578,9 +587,9 @@
         "colab": {
           "base_uri": "https://localhost:8080/"
         },
-        "outputId": "57cbc021-6889-4dcc-ba08-a252c199ba75"
+        "outputId": "cd07e575-e3a5-42c8-da3f-e93b71476a46"
       },
-      "execution_count": 36,
+      "execution_count": 49,
       "outputs": [
         {
           "output_type": "stream",
@@ -662,15 +671,25 @@
         "colab": {
           "base_uri": "https://localhost:8080/"
         },
-        "outputId": "28b9359f-f599-4ae6-cdf8-b7929a572007"
+        "outputId": "57ffaf9b-7348-4d14-b72c-78a8f864fa27"
       },
-      "execution_count": 37,
+      "execution_count": 50,
       "outputs": [
         {
           "output_type": "stream",
           "name": "stdout",
           "text": [
-            "Model: Logistic Regression\n"
+            "Model: Logistic Regression\n",
+            "Accuracy: 1.0\n",
+            "Precision: 1.0\n",
+            "Recall: 1.0\n",
+            "F1-Score: 1.0\n",
+            "Model: Decision Tree\n",
+            "Accuracy: 1.0\n",
+            "Precision: 1.0\n",
+            "Recall: 1.0\n",
+            "F1-Score: 1.0\n",
+            "Model: Random Forest\n"
           ]
         },
         {
@@ -691,16 +710,6 @@
           "output_type": "stream",
           "name": "stdout",
           "text": [
-            "Accuracy: 1.0\n",
-            "Precision: 1.0\n",
-            "Recall: 1.0\n",
-            "F1-Score: 1.0\n",
-            "Model: Decision Tree\n",
-            "Accuracy: 1.0\n",
-            "Precision: 1.0\n",
-            "Recall: 1.0\n",
-            "F1-Score: 1.0\n",
-            "Model: Random Forest\n",
             "Accuracy: 1.0\n",
             "Precision: 1.0\n",
             "Recall: 1.0\n",
