@@ -487,8 +487,9 @@
         "# Handle categorical variables (example: one-hot encoding for 'Sex' column)\n",
         "# we do it later\n",
         "data_encoded = data.copy()\n",
-        "# Handle categorical variables (example: one-hot encoding for 'Sex' column)\n",
-        "data_encoded = pd.get_dummies(data_encoded, columns=['Sex'])\n",
+        "# Handle categorical variables (example: one-hot encoding for 'Sex'. Embarked column)\n",
+        "# Encode categorical variables (convert strings to numbers)\n",
+        "data_encoded = pd.get_dummies(data_encoded, columns=['Sex', 'Embarked'], drop_first=True)\n",
         "\n",
         "# Perform feature scaling (standardization)\n",
         "data_encoded['Age'] = (data_encoded['Age'] - data_encoded['Age'].mean()) / data_encoded['Age'].std()\n",
@@ -499,10 +500,12 @@
         "# Address outliers (remove rows where |z| >= 3)\n",
         "data_encoded = data_encoded.loc[data_encoded['Fare_z_score'].abs() < 3]\n",
         "\n",
-        "# Drop original Fare column\n",
+        "# Drop columns that we will not use\n",
         "data_encoded = data_encoded.drop(columns=['Fare'])\n",
         "data_encoded = data_encoded.drop(columns=['Name'])\n",
         "data_encoded = data_encoded.drop(columns=['Cabin'])\n",
+        "data_encoded = data_encoded.drop(columns=['Ticket'])\n",
+        "\n",
         "\n",
         "# Final preprocessed dataset\n",
         "print(\"\\nPreprocessed dataset:\")\n",
@@ -516,10 +519,10 @@
           "base_uri": "https://localhost:8080/"
         },
         "id": "u8FbA7iU_v6U",
-        "outputId": "f2f6e8b4-8442-4fb6-ed3f-1693470d1d67",
+        "outputId": "a73eb27b-47c5-4471-c274-8e65626230da",
         "collapsed": true
       },
-      "execution_count": 54,
+      "execution_count": 64,
       "outputs": [
         {
           "output_type": "stream",
@@ -527,21 +530,21 @@
           "text": [
             "\n",
             "Preprocessed dataset:\n",
-            "   PassengerId  Survived  Pclass       Age  SibSp  Parch   Ticket Embarked  \\\n",
-            "0          892         0       3  0.334592      0      0   330911        Q   \n",
-            "1          893         1       3  1.323944      1      0   363272        S   \n",
-            "2          894         0       2  2.511166      0      0   240276        Q   \n",
-            "3          895         0       3 -0.259019      0      0   315154        S   \n",
-            "4          896         1       3 -0.654760      1      1  3101298        S   \n",
+            "   PassengerId  Survived  Pclass       Age  SibSp  Parch  Sex_male  \\\n",
+            "0          892         0       3  0.334592      0      0      True   \n",
+            "1          893         1       3  1.323944      1      0     False   \n",
+            "2          894         0       2  2.511166      0      0      True   \n",
+            "3          895         0       3 -0.259019      0      0      True   \n",
+            "4          896         1       3 -0.654760      1      1     False   \n",
             "\n",
-            "   Sex_female  Sex_male  Fare_z_score  \n",
-            "0       False      True     -0.497213  \n",
-            "1        True     False     -0.512045  \n",
-            "2       False      True     -0.463974  \n",
-            "3       False      True     -0.482308  \n",
-            "4        True     False     -0.417469  \n",
-            "Index(['PassengerId', 'Survived', 'Pclass', 'Age', 'SibSp', 'Parch', 'Ticket',\n",
-            "       'Embarked', 'Sex_female', 'Sex_male', 'Fare_z_score'],\n",
+            "   Embarked_Q  Embarked_S  Fare_z_score  \n",
+            "0        True       False     -0.497213  \n",
+            "1       False        True     -0.512045  \n",
+            "2        True       False     -0.463974  \n",
+            "3       False        True     -0.482308  \n",
+            "4       False        True     -0.417469  \n",
+            "Index(['PassengerId', 'Survived', 'Pclass', 'Age', 'SibSp', 'Parch',\n",
+            "       'Sex_male', 'Embarked_Q', 'Embarked_S', 'Fare_z_score'],\n",
             "      dtype='object')\n"
           ]
         }
@@ -576,32 +579,30 @@
         "colab": {
           "base_uri": "https://localhost:8080/"
         },
-        "outputId": "11aa0e01-2e9f-422c-ba0b-150bd193a106"
+        "outputId": "76f1b9df-16d6-441f-eed6-20cee5fee00c"
       },
-      "execution_count": 59,
+      "execution_count": 65,
       "outputs": [
         {
           "output_type": "stream",
           "name": "stdout",
           "text": [
-            "Index(['PassengerId', 'Survived', 'Pclass', 'Age', 'SibSp', 'Parch', 'Ticket',\n",
-            "       'Embarked', 'Sex_female', 'Sex_male', 'Fare_z_score'],\n",
+            "Index(['PassengerId', 'Survived', 'Pclass', 'Age', 'SibSp', 'Parch',\n",
+            "       'Sex_male', 'Embarked_Q', 'Embarked_S', 'Fare_z_score'],\n",
             "      dtype='object')\n",
-            "   PassengerId  Survived  Pclass       Age  SibSp  ...   Ticket Embarked  \\\n",
-            "0          892         0       3  0.334592      0  ...   330911        Q   \n",
-            "1          893         1       3  1.323944      1  ...   363272        S   \n",
-            "2          894         0       2  2.511166      0  ...   240276        Q   \n",
-            "3          895         0       3 -0.259019      0  ...   315154        S   \n",
-            "4          896         1       3 -0.654760      1  ...  3101298        S   \n",
+            "   PassengerId  Survived  Pclass       Age  SibSp  Parch  Sex_male  \\\n",
+            "0          892         0       3  0.334592      0      0      True   \n",
+            "1          893         1       3  1.323944      1      0     False   \n",
+            "2          894         0       2  2.511166      0      0      True   \n",
+            "3          895         0       3 -0.259019      0      0      True   \n",
+            "4          896         1       3 -0.654760      1      1     False   \n",
             "\n",
-            "  Sex_female  Sex_male  Fare_z_score  \n",
-            "0      False      True     -0.497213  \n",
-            "1       True     False     -0.512045  \n",
-            "2      False      True     -0.463974  \n",
-            "3      False      True     -0.482308  \n",
-            "4       True     False     -0.417469  \n",
-            "\n",
-            "[5 rows x 11 columns]\n"
+            "   Embarked_Q  Embarked_S  Fare_z_score  \n",
+            "0        True       False     -0.497213  \n",
+            "1       False        True     -0.512045  \n",
+            "2        True       False     -0.463974  \n",
+            "3       False        True     -0.482308  \n",
+            "4       False        True     -0.417469  \n"
           ]
         }
       ]
@@ -620,7 +621,7 @@
         "#  Ensemble methods (random forest)\n",
         "\n",
         "models = {\n",
-        "    'Logistic Regression': LogisticRegression(),\n",
+        "    'Logistic Regression': LogisticRegression(max_iter=2000),\n",
         "    'Decision Tree': DecisionTreeClassifier(),\n",
         "    'Random Forest': RandomForestClassifier(),\n",
         "    'Support Vector Machine': SVC()\n",
@@ -647,41 +648,44 @@
       "metadata": {
         "id": "I0Rx9Mz0hSTH",
         "colab": {
-          "base_uri": "https://localhost:8080/",
-          "height": 373
+          "base_uri": "https://localhost:8080/"
         },
-        "outputId": "81d89a55-43bc-4a77-ad24-78281f27120a"
+        "outputId": "16a61ca4-a5bc-44a3-953e-e0c1d64b6f4c"
       },
-      "execution_count": 57,
+      "execution_count": 67,
       "outputs": [
         {
           "output_type": "stream",
           "name": "stdout",
           "text": [
-            "Model: Logistic Regression\n"
+            "Model: Logistic Regression\n",
+            "Accuracy: 1.0\n",
+            "Precision: 1.0\n",
+            "Recall: 1.0\n",
+            "F1-Score: 1.0\n",
+            "Model: Decision Tree\n",
+            "Accuracy: 1.0\n",
+            "Precision: 1.0\n",
+            "Recall: 1.0\n",
+            "F1-Score: 1.0\n",
+            "Model: Random Forest\n",
+            "Accuracy: 1.0\n",
+            "Precision: 1.0\n",
+            "Recall: 1.0\n",
+            "F1-Score: 1.0\n",
+            "Model: Support Vector Machine\n",
+            "Accuracy: 0.6875\n",
+            "Precision: 0.0\n",
+            "Recall: 0.0\n",
+            "F1-Score: 0.0\n"
           ]
         },
         {
-          "output_type": "error",
-          "ename": "ValueError",
-          "evalue": "could not convert string to float: 'STON/O2. 3101270'",
-          "traceback": [
-            "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
-            "\u001b[0;31mValueError\u001b[0m                                Traceback (most recent call last)",
-            "\u001b[0;32m/tmp/ipykernel_402/2151046103.py\u001b[0m in \u001b[0;36m<cell line: 0>\u001b[0;34m()\u001b[0m\n\u001b[1;32m     17\u001b[0m \u001b[0;32mfor\u001b[0m \u001b[0mmodel_name\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mmodel\u001b[0m \u001b[0;32min\u001b[0m \u001b[0mmodels\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mitems\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     18\u001b[0m     \u001b[0mprint\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34mf\"Model: {model_name}\"\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 19\u001b[0;31m     \u001b[0mmodel\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mfit\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mX_train\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0my_train\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m     20\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     21\u001b[0m     \u001b[0;31m# Make predictions on the test set\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
-            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/sklearn/base.py\u001b[0m in \u001b[0;36mwrapper\u001b[0;34m(estimator, *args, **kwargs)\u001b[0m\n\u001b[1;32m   1387\u001b[0m                 )\n\u001b[1;32m   1388\u001b[0m             ):\n\u001b[0;32m-> 1389\u001b[0;31m                 \u001b[0;32mreturn\u001b[0m \u001b[0mfit_method\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mestimator\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m*\u001b[0m\u001b[0margs\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m**\u001b[0m\u001b[0mkwargs\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m   1390\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m   1391\u001b[0m         \u001b[0;32mreturn\u001b[0m \u001b[0mwrapper\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
-            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/sklearn/linear_model/_logistic.py\u001b[0m in \u001b[0;36mfit\u001b[0;34m(self, X, y, sample_weight)\u001b[0m\n\u001b[1;32m   1220\u001b[0m             \u001b[0m_dtype\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;34m[\u001b[0m\u001b[0mnp\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mfloat64\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mnp\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mfloat32\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m   1221\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m-> 1222\u001b[0;31m         X, y = validate_data(\n\u001b[0m\u001b[1;32m   1223\u001b[0m             \u001b[0mself\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m   1224\u001b[0m             \u001b[0mX\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
-            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/sklearn/utils/validation.py\u001b[0m in \u001b[0;36mvalidate_data\u001b[0;34m(_estimator, X, y, reset, validate_separately, skip_check_array, **check_params)\u001b[0m\n\u001b[1;32m   2959\u001b[0m             \u001b[0my\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mcheck_array\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0my\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0minput_name\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;34m\"y\"\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m**\u001b[0m\u001b[0mcheck_y_params\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m   2960\u001b[0m         \u001b[0;32melse\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m-> 2961\u001b[0;31m             \u001b[0mX\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0my\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mcheck_X_y\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mX\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0my\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m**\u001b[0m\u001b[0mcheck_params\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m   2962\u001b[0m         \u001b[0mout\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mX\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0my\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m   2963\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n",
-            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/sklearn/utils/validation.py\u001b[0m in \u001b[0;36mcheck_X_y\u001b[0;34m(X, y, accept_sparse, accept_large_sparse, dtype, order, copy, force_writeable, force_all_finite, ensure_all_finite, ensure_2d, allow_nd, multi_output, ensure_min_samples, ensure_min_features, y_numeric, estimator)\u001b[0m\n\u001b[1;32m   1368\u001b[0m     \u001b[0mensure_all_finite\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0m_deprecate_force_all_finite\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mforce_all_finite\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mensure_all_finite\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m   1369\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m-> 1370\u001b[0;31m     X = check_array(\n\u001b[0m\u001b[1;32m   1371\u001b[0m         \u001b[0mX\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m   1372\u001b[0m         \u001b[0maccept_sparse\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0maccept_sparse\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
-            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/sklearn/utils/validation.py\u001b[0m in \u001b[0;36mcheck_array\u001b[0;34m(array, accept_sparse, accept_large_sparse, dtype, order, copy, force_writeable, force_all_finite, ensure_all_finite, ensure_non_negative, ensure_2d, allow_nd, ensure_min_samples, ensure_min_features, estimator, input_name)\u001b[0m\n\u001b[1;32m    971\u001b[0m         \u001b[0;31m# Use the original dtype for conversion if dtype is None\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    972\u001b[0m         \u001b[0mnew_dtype\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mdtype_orig\u001b[0m \u001b[0;32mif\u001b[0m \u001b[0mdtype\u001b[0m \u001b[0;32mis\u001b[0m \u001b[0;32mNone\u001b[0m \u001b[0;32melse\u001b[0m \u001b[0mdtype\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 973\u001b[0;31m         \u001b[0marray\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0marray\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mastype\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mnew_dtype\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    974\u001b[0m         \u001b[0;31m# Since we converted here, we do not need to convert again later\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    975\u001b[0m         \u001b[0mdtype\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;32mNone\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
-            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/pandas/core/generic.py\u001b[0m in \u001b[0;36mastype\u001b[0;34m(self, dtype, copy, errors)\u001b[0m\n\u001b[1;32m   6641\u001b[0m         \u001b[0;32melse\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m   6642\u001b[0m             \u001b[0;31m# else, only a single dtype is given\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m-> 6643\u001b[0;31m             \u001b[0mnew_data\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0m_mgr\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mastype\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mdtype\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mdtype\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mcopy\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mcopy\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0merrors\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0merrors\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m   6644\u001b[0m             \u001b[0mres\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0m_constructor_from_mgr\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mnew_data\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0maxes\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mnew_data\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0maxes\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m   6645\u001b[0m             \u001b[0;32mreturn\u001b[0m \u001b[0mres\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0m__finalize__\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mself\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mmethod\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;34m\"astype\"\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
-            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/pandas/core/internals/managers.py\u001b[0m in \u001b[0;36mastype\u001b[0;34m(self, dtype, copy, errors)\u001b[0m\n\u001b[1;32m    428\u001b[0m             \u001b[0mcopy\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;32mFalse\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    429\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 430\u001b[0;31m         return self.apply(\n\u001b[0m\u001b[1;32m    431\u001b[0m             \u001b[0;34m\"astype\"\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    432\u001b[0m             \u001b[0mdtype\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mdtype\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
-            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/pandas/core/internals/managers.py\u001b[0m in \u001b[0;36mapply\u001b[0;34m(self, f, align_keys, **kwargs)\u001b[0m\n\u001b[1;32m    361\u001b[0m                 \u001b[0mapplied\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mb\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mapply\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mf\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m**\u001b[0m\u001b[0mkwargs\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    362\u001b[0m             \u001b[0;32melse\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 363\u001b[0;31m                 \u001b[0mapplied\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mgetattr\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mb\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mf\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m**\u001b[0m\u001b[0mkwargs\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    364\u001b[0m             \u001b[0mresult_blocks\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mextend_blocks\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mapplied\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mresult_blocks\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    365\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n",
-            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/pandas/core/internals/blocks.py\u001b[0m in \u001b[0;36mastype\u001b[0;34m(self, dtype, copy, errors, using_cow, squeeze)\u001b[0m\n\u001b[1;32m    756\u001b[0m             \u001b[0mvalues\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mvalues\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;36m0\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m:\u001b[0m\u001b[0;34m]\u001b[0m  \u001b[0;31m# type: ignore[call-overload]\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    757\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 758\u001b[0;31m         \u001b[0mnew_values\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mastype_array_safe\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mvalues\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mdtype\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mcopy\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mcopy\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0merrors\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0merrors\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    759\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    760\u001b[0m         \u001b[0mnew_values\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mmaybe_coerce_values\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mnew_values\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
-            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/pandas/core/dtypes/astype.py\u001b[0m in \u001b[0;36mastype_array_safe\u001b[0;34m(values, dtype, copy, errors)\u001b[0m\n\u001b[1;32m    235\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    236\u001b[0m     \u001b[0;32mtry\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 237\u001b[0;31m         \u001b[0mnew_values\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mastype_array\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mvalues\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mdtype\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mcopy\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mcopy\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    238\u001b[0m     \u001b[0;32mexcept\u001b[0m \u001b[0;34m(\u001b[0m\u001b[0mValueError\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mTypeError\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    239\u001b[0m         \u001b[0;31m# e.g. _astype_nansafe can fail on object-dtype of strings\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
-            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/pandas/core/dtypes/astype.py\u001b[0m in \u001b[0;36mastype_array\u001b[0;34m(values, dtype, copy)\u001b[0m\n\u001b[1;32m    180\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    181\u001b[0m     \u001b[0;32melse\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 182\u001b[0;31m         \u001b[0mvalues\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0m_astype_nansafe\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mvalues\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mdtype\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mcopy\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mcopy\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    183\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    184\u001b[0m     \u001b[0;31m# in pandas we don't store numpy str dtypes, so convert to object\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
-            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/pandas/core/dtypes/astype.py\u001b[0m in \u001b[0;36m_astype_nansafe\u001b[0;34m(arr, dtype, copy, skipna)\u001b[0m\n\u001b[1;32m    131\u001b[0m     \u001b[0;32mif\u001b[0m \u001b[0mcopy\u001b[0m \u001b[0;32mor\u001b[0m \u001b[0marr\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mdtype\u001b[0m \u001b[0;34m==\u001b[0m \u001b[0mobject\u001b[0m \u001b[0;32mor\u001b[0m \u001b[0mdtype\u001b[0m \u001b[0;34m==\u001b[0m \u001b[0mobject\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    132\u001b[0m         \u001b[0;31m# Explicit copy, or required since NumPy can't view from / to object.\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 133\u001b[0;31m         \u001b[0;32mreturn\u001b[0m \u001b[0marr\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mastype\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mdtype\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mcopy\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;32mTrue\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    134\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    135\u001b[0m     \u001b[0;32mreturn\u001b[0m \u001b[0marr\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mastype\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mdtype\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mcopy\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mcopy\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
-            "\u001b[0;31mValueError\u001b[0m: could not convert string to float: 'STON/O2. 3101270'"
+          "output_type": "stream",
+          "name": "stderr",
+          "text": [
+            "/usr/local/lib/python3.12/dist-packages/sklearn/metrics/_classification.py:1565: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 due to no predicted samples. Use `zero_division` parameter to control this behavior.\n",
+            "  _warn_prf(average, modifier, f\"{metric.capitalize()} is\", len(result))\n"
           ]
         }
       ]
