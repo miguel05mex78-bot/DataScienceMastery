@@ -36,14 +36,14 @@
     },
     {
       "cell_type": "code",
-      "execution_count": 18,
+      "execution_count": 46,
       "metadata": {
         "id": "MwgG6W3Hx752",
         "colab": {
           "base_uri": "https://localhost:8080/",
-          "height": 451
+          "height": 206
         },
-        "outputId": "0ff0db72-4f02-4884-b55c-00d69d8e1473"
+        "outputId": "9d724948-140a-42c2-c3d9-15ebe96964a4"
       },
       "outputs": [
         {
@@ -73,7 +73,7 @@
             ],
             "text/html": [
               "\n",
-              "  <div id=\"df-cd0b4924-ef71-4e5c-9734-df8c3c4f864d\" class=\"colab-df-container\">\n",
+              "  <div id=\"df-e3471830-7c93-4134-827b-68a2130293b8\" class=\"colab-df-container\">\n",
               "    <div>\n",
               "<style scoped>\n",
               "    .dataframe tbody tr th:only-of-type {\n",
@@ -188,7 +188,7 @@
               "    <div class=\"colab-df-buttons\">\n",
               "\n",
               "  <div class=\"colab-df-container\">\n",
-              "    <button class=\"colab-df-convert\" onclick=\"convertToInteractive('df-cd0b4924-ef71-4e5c-9734-df8c3c4f864d')\"\n",
+              "    <button class=\"colab-df-convert\" onclick=\"convertToInteractive('df-e3471830-7c93-4134-827b-68a2130293b8')\"\n",
               "            title=\"Convert this dataframe to an interactive table.\"\n",
               "            style=\"display:none;\">\n",
               "\n",
@@ -240,12 +240,12 @@
               "\n",
               "    <script>\n",
               "      const buttonEl =\n",
-              "        document.querySelector('#df-cd0b4924-ef71-4e5c-9734-df8c3c4f864d button.colab-df-convert');\n",
+              "        document.querySelector('#df-e3471830-7c93-4134-827b-68a2130293b8 button.colab-df-convert');\n",
               "      buttonEl.style.display =\n",
               "        google.colab.kernel.accessAllowed ? 'block' : 'none';\n",
               "\n",
               "      async function convertToInteractive(key) {\n",
-              "        const element = document.querySelector('#df-cd0b4924-ef71-4e5c-9734-df8c3c4f864d');\n",
+              "        const element = document.querySelector('#df-e3471830-7c93-4134-827b-68a2130293b8');\n",
               "        const dataTable =\n",
               "          await google.colab.kernel.invokeFunction('convertToInteractive',\n",
               "                                                    [key], {});\n",
@@ -275,7 +275,7 @@
             }
           },
           "metadata": {},
-          "execution_count": 18
+          "execution_count": 46
         }
       ],
       "source": [
@@ -319,9 +319,9 @@
           "base_uri": "https://localhost:8080/"
         },
         "id": "SqdQZWIY_XRy",
-        "outputId": "9155f60a-db0d-451b-9dbe-e0b93e7e71c2"
+        "outputId": "43f629ce-731d-4fb8-d529-3c9eb8911fb8"
       },
-      "execution_count": 19,
+      "execution_count": 47,
       "outputs": [
         {
           "output_type": "stream",
@@ -364,9 +364,9 @@
           "base_uri": "https://localhost:8080/"
         },
         "id": "Y5rvW85a_d8A",
-        "outputId": "4414cd11-4357-436f-e812-ec53044c7cec"
+        "outputId": "562f95f0-a3e2-4d8b-bfff-189a924d3bf9"
       },
-      "execution_count": 20,
+      "execution_count": 48,
       "outputs": [
         {
           "output_type": "stream",
@@ -397,9 +397,9 @@
           "height": 472
         },
         "id": "yakqVj15_Y3y",
-        "outputId": "081469e3-88b0-4b33-d3ae-448515091d50"
+        "outputId": "a6feee02-5643-40f7-de1c-ccf9442ddee8"
       },
-      "execution_count": 21,
+      "execution_count": 49,
       "outputs": [
         {
           "output_type": "display_data",
@@ -438,12 +438,12 @@
       "metadata": {
         "colab": {
           "base_uri": "https://localhost:8080/",
-          "height": 743
+          "height": 860
         },
         "id": "yKwsMO_XJj_j",
-        "outputId": "57571621-062d-4c1c-f6cb-8dcefbc3d856"
+        "outputId": "458783a1-53d6-48cd-88d5-596b9fdf17d4"
       },
-      "execution_count": 22,
+      "execution_count": 50,
       "outputs": [
         {
           "output_type": "stream",
@@ -487,6 +487,8 @@
         "# Handle categorical variables (example: one-hot encoding for 'Sex' column)\n",
         "# we do it later\n",
         "data_encoded = data.copy()\n",
+        "# Handle categorical variables (example: one-hot encoding for 'Sex' column)\n",
+        "data_encoded = pd.get_dummies(data_encoded, columns=['Sex'])\n",
         "\n",
         "# Perform feature scaling (standardization)\n",
         "data_encoded['Age'] = (data_encoded['Age'] - data_encoded['Age'].mean()) / data_encoded['Age'].std()\n",
@@ -499,20 +501,25 @@
         "\n",
         "# Drop original Fare column\n",
         "data_encoded = data_encoded.drop(columns=['Fare'])\n",
+        "data_encoded = data_encoded.drop(columns=['Name'])\n",
+        "data_encoded = data_encoded.drop(columns=['Cabin'])\n",
         "\n",
         "# Final preprocessed dataset\n",
         "print(\"\\nPreprocessed dataset:\")\n",
-        "print(data_encoded.head())"
+        "print(data_encoded.head())\n",
+        "\n",
+        "# check the column names\n",
+        "print(data_encoded.columns)\n"
       ],
       "metadata": {
         "colab": {
           "base_uri": "https://localhost:8080/"
         },
         "id": "u8FbA7iU_v6U",
-        "outputId": "73773f9e-2036-45ec-d41e-8aff94ed712f",
+        "outputId": "f2f6e8b4-8442-4fb6-ed3f-1693470d1d67",
         "collapsed": true
       },
-      "execution_count": 24,
+      "execution_count": 54,
       "outputs": [
         {
           "output_type": "stream",
@@ -520,26 +527,22 @@
           "text": [
             "\n",
             "Preprocessed dataset:\n",
-            "   PassengerId  Survived  Pclass  \\\n",
-            "0          892         0       3   \n",
-            "1          893         1       3   \n",
-            "2          894         0       2   \n",
-            "3          895         0       3   \n",
-            "4          896         1       3   \n",
+            "   PassengerId  Survived  Pclass       Age  SibSp  Parch   Ticket Embarked  \\\n",
+            "0          892         0       3  0.334592      0      0   330911        Q   \n",
+            "1          893         1       3  1.323944      1      0   363272        S   \n",
+            "2          894         0       2  2.511166      0      0   240276        Q   \n",
+            "3          895         0       3 -0.259019      0      0   315154        S   \n",
+            "4          896         1       3 -0.654760      1      1  3101298        S   \n",
             "\n",
-            "                                           Name     Sex       Age  SibSp  \\\n",
-            "0                              Kelly, Mr. James    male  0.334592      0   \n",
-            "1              Wilkes, Mrs. James (Ellen Needs)  female  1.323944      1   \n",
-            "2                     Myles, Mr. Thomas Francis    male  2.511166      0   \n",
-            "3                              Wirz, Mr. Albert    male -0.259019      0   \n",
-            "4  Hirvonen, Mrs. Alexander (Helga E Lindqvist)  female -0.654760      1   \n",
-            "\n",
-            "   Parch   Ticket Cabin Embarked  Fare_z_score  \n",
-            "0      0   330911   NaN        Q     -0.497213  \n",
-            "1      0   363272   NaN        S     -0.512045  \n",
-            "2      0   240276   NaN        Q     -0.463974  \n",
-            "3      0   315154   NaN        S     -0.482308  \n",
-            "4      1  3101298   NaN        S     -0.417469  \n"
+            "   Sex_female  Sex_male  Fare_z_score  \n",
+            "0       False      True     -0.497213  \n",
+            "1        True     False     -0.512045  \n",
+            "2       False      True     -0.463974  \n",
+            "3       False      True     -0.482308  \n",
+            "4        True     False     -0.417469  \n",
+            "Index(['PassengerId', 'Survived', 'Pclass', 'Age', 'SibSp', 'Parch', 'Ticket',\n",
+            "       'Embarked', 'Sex_female', 'Sex_male', 'Fare_z_score'],\n",
+            "      dtype='object')\n"
           ]
         }
       ]
@@ -548,7 +551,7 @@
       "cell_type": "code",
       "source": [
         "# check the column names\n",
-        "print(data.columns)\n",
+        "print(data_encoded.columns)\n",
         "\n",
         "# Import the necessary libraries\n",
         "import pandas as pd\n",
@@ -560,7 +563,9 @@
         "from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score\n",
         "\n",
         "# Preprocess the data (example: one-hot encoding for categorical variables)\n",
-        "data = pd.get_dummies(data_encoded)\n",
+        "# data = pd.get_dummies(data_encoded)\n",
+        "\n",
+        "\n",
         "\n",
         "# drop the variables from where we generated the dummies\n",
         "\n",
@@ -571,53 +576,32 @@
         "colab": {
           "base_uri": "https://localhost:8080/"
         },
-        "outputId": "5a15ca2f-ed33-48cb-e0db-d44aa7e46140"
+        "outputId": "11aa0e01-2e9f-422c-ba0b-150bd193a106"
       },
-      "execution_count": 25,
+      "execution_count": 59,
       "outputs": [
         {
           "output_type": "stream",
           "name": "stdout",
           "text": [
-            "Index(['PassengerId', 'Survived', 'Pclass', 'Name', 'Sex', 'Age', 'SibSp',\n",
-            "       'Parch', 'Ticket', 'Fare', 'Cabin', 'Embarked'],\n",
+            "Index(['PassengerId', 'Survived', 'Pclass', 'Age', 'SibSp', 'Parch', 'Ticket',\n",
+            "       'Embarked', 'Sex_female', 'Sex_male', 'Fare_z_score'],\n",
             "      dtype='object')\n",
-            "   PassengerId  Survived  Pclass       Age  SibSp  Parch  Fare_z_score  \\\n",
-            "0          892         0       3  0.334592      0      0     -0.497213   \n",
-            "1          893         1       3  1.323944      1      0     -0.512045   \n",
-            "2          894         0       2  2.511166      0      0     -0.463974   \n",
-            "3          895         0       3 -0.259019      0      0     -0.482308   \n",
-            "4          896         1       3 -0.654760      1      1     -0.417469   \n",
+            "   PassengerId  Survived  Pclass       Age  SibSp  ...   Ticket Embarked  \\\n",
+            "0          892         0       3  0.334592      0  ...   330911        Q   \n",
+            "1          893         1       3  1.323944      1  ...   363272        S   \n",
+            "2          894         0       2  2.511166      0  ...   240276        Q   \n",
+            "3          895         0       3 -0.259019      0  ...   315154        S   \n",
+            "4          896         1       3 -0.654760      1  ...  3101298        S   \n",
             "\n",
-            "   Name_Abbott, Master. Eugene Joseph  Name_Abelseth, Miss. Karen Marie  \\\n",
-            "0                               False                             False   \n",
-            "1                               False                             False   \n",
-            "2                               False                             False   \n",
-            "3                               False                             False   \n",
-            "4                               False                             False   \n",
+            "  Sex_female  Sex_male  Fare_z_score  \n",
+            "0      False      True     -0.497213  \n",
+            "1       True     False     -0.512045  \n",
+            "2      False      True     -0.463974  \n",
+            "3      False      True     -0.482308  \n",
+            "4       True     False     -0.417469  \n",
             "\n",
-            "   Name_Abelseth, Mr. Olaus Jorgensen  ...  Cabin_F E46  Cabin_F E57  \\\n",
-            "0                               False  ...        False        False   \n",
-            "1                               False  ...        False        False   \n",
-            "2                               False  ...        False        False   \n",
-            "3                               False  ...        False        False   \n",
-            "4                               False  ...        False        False   \n",
-            "\n",
-            "   Cabin_F G63  Cabin_F2  Cabin_F33  Cabin_F4  Cabin_G6  Embarked_C  \\\n",
-            "0        False     False      False     False     False       False   \n",
-            "1        False     False      False     False     False       False   \n",
-            "2        False     False      False     False     False       False   \n",
-            "3        False     False      False     False     False       False   \n",
-            "4        False     False      False     False     False       False   \n",
-            "\n",
-            "   Embarked_Q  Embarked_S  \n",
-            "0        True       False  \n",
-            "1       False        True  \n",
-            "2        True       False  \n",
-            "3       False        True  \n",
-            "4       False        True  \n",
-            "\n",
-            "[5 rows x 830 columns]\n"
+            "[5 rows x 11 columns]\n"
           ]
         }
       ]
@@ -627,7 +611,7 @@
       "source": [
         "\n",
         "# Split the data into training and testing sets\n",
-        "X_train, X_test, y_train, y_test = train_test_split(data.drop('Survived', axis=1), data['Survived'], test_size=0.2, random_state=42)\n",
+        "X_train, X_test, y_train, y_test = train_test_split(data_encoded.drop('Survived', axis=1), data_encoded['Survived'], test_size=0.2, random_state=42)\n",
         "\n",
         "# Initialize and train different models\n",
         "# Supervised models\n",
@@ -663,64 +647,41 @@
       "metadata": {
         "id": "I0Rx9Mz0hSTH",
         "colab": {
-          "base_uri": "https://localhost:8080/"
+          "base_uri": "https://localhost:8080/",
+          "height": 373
         },
-        "outputId": "57ffaf9b-7348-4d14-b72c-78a8f864fa27"
+        "outputId": "81d89a55-43bc-4a77-ad24-78281f27120a"
       },
-      "execution_count": 50,
+      "execution_count": 57,
       "outputs": [
         {
           "output_type": "stream",
           "name": "stdout",
           "text": [
-            "Model: Logistic Regression\n",
-            "Accuracy: 1.0\n",
-            "Precision: 1.0\n",
-            "Recall: 1.0\n",
-            "F1-Score: 1.0\n",
-            "Model: Decision Tree\n",
-            "Accuracy: 1.0\n",
-            "Precision: 1.0\n",
-            "Recall: 1.0\n",
-            "F1-Score: 1.0\n",
-            "Model: Random Forest\n"
+            "Model: Logistic Regression\n"
           ]
         },
         {
-          "output_type": "stream",
-          "name": "stderr",
-          "text": [
-            "/usr/local/lib/python3.12/dist-packages/sklearn/linear_model/_logistic.py:465: ConvergenceWarning: lbfgs failed to converge (status=1):\n",
-            "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT.\n",
-            "\n",
-            "Increase the number of iterations (max_iter) or scale the data as shown in:\n",
-            "    https://scikit-learn.org/stable/modules/preprocessing.html\n",
-            "Please also refer to the documentation for alternative solver options:\n",
-            "    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression\n",
-            "  n_iter_i = _check_optimize_result(\n"
-          ]
-        },
-        {
-          "output_type": "stream",
-          "name": "stdout",
-          "text": [
-            "Accuracy: 1.0\n",
-            "Precision: 1.0\n",
-            "Recall: 1.0\n",
-            "F1-Score: 1.0\n",
-            "Model: Support Vector Machine\n",
-            "Accuracy: 0.6875\n",
-            "Precision: 0.0\n",
-            "Recall: 0.0\n",
-            "F1-Score: 0.0\n"
-          ]
-        },
-        {
-          "output_type": "stream",
-          "name": "stderr",
-          "text": [
-            "/usr/local/lib/python3.12/dist-packages/sklearn/metrics/_classification.py:1565: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 due to no predicted samples. Use `zero_division` parameter to control this behavior.\n",
-            "  _warn_prf(average, modifier, f\"{metric.capitalize()} is\", len(result))\n"
+          "output_type": "error",
+          "ename": "ValueError",
+          "evalue": "could not convert string to float: 'STON/O2. 3101270'",
+          "traceback": [
+            "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+            "\u001b[0;31mValueError\u001b[0m                                Traceback (most recent call last)",
+            "\u001b[0;32m/tmp/ipykernel_402/2151046103.py\u001b[0m in \u001b[0;36m<cell line: 0>\u001b[0;34m()\u001b[0m\n\u001b[1;32m     17\u001b[0m \u001b[0;32mfor\u001b[0m \u001b[0mmodel_name\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mmodel\u001b[0m \u001b[0;32min\u001b[0m \u001b[0mmodels\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mitems\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     18\u001b[0m     \u001b[0mprint\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34mf\"Model: {model_name}\"\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 19\u001b[0;31m     \u001b[0mmodel\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mfit\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mX_train\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0my_train\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m     20\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     21\u001b[0m     \u001b[0;31m# Make predictions on the test set\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/sklearn/base.py\u001b[0m in \u001b[0;36mwrapper\u001b[0;34m(estimator, *args, **kwargs)\u001b[0m\n\u001b[1;32m   1387\u001b[0m                 )\n\u001b[1;32m   1388\u001b[0m             ):\n\u001b[0;32m-> 1389\u001b[0;31m                 \u001b[0;32mreturn\u001b[0m \u001b[0mfit_method\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mestimator\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m*\u001b[0m\u001b[0margs\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m**\u001b[0m\u001b[0mkwargs\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m   1390\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m   1391\u001b[0m         \u001b[0;32mreturn\u001b[0m \u001b[0mwrapper\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/sklearn/linear_model/_logistic.py\u001b[0m in \u001b[0;36mfit\u001b[0;34m(self, X, y, sample_weight)\u001b[0m\n\u001b[1;32m   1220\u001b[0m             \u001b[0m_dtype\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;34m[\u001b[0m\u001b[0mnp\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mfloat64\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mnp\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mfloat32\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m   1221\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m-> 1222\u001b[0;31m         X, y = validate_data(\n\u001b[0m\u001b[1;32m   1223\u001b[0m             \u001b[0mself\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m   1224\u001b[0m             \u001b[0mX\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/sklearn/utils/validation.py\u001b[0m in \u001b[0;36mvalidate_data\u001b[0;34m(_estimator, X, y, reset, validate_separately, skip_check_array, **check_params)\u001b[0m\n\u001b[1;32m   2959\u001b[0m             \u001b[0my\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mcheck_array\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0my\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0minput_name\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;34m\"y\"\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m**\u001b[0m\u001b[0mcheck_y_params\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m   2960\u001b[0m         \u001b[0;32melse\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m-> 2961\u001b[0;31m             \u001b[0mX\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0my\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mcheck_X_y\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mX\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0my\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m**\u001b[0m\u001b[0mcheck_params\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m   2962\u001b[0m         \u001b[0mout\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mX\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0my\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m   2963\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/sklearn/utils/validation.py\u001b[0m in \u001b[0;36mcheck_X_y\u001b[0;34m(X, y, accept_sparse, accept_large_sparse, dtype, order, copy, force_writeable, force_all_finite, ensure_all_finite, ensure_2d, allow_nd, multi_output, ensure_min_samples, ensure_min_features, y_numeric, estimator)\u001b[0m\n\u001b[1;32m   1368\u001b[0m     \u001b[0mensure_all_finite\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0m_deprecate_force_all_finite\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mforce_all_finite\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mensure_all_finite\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m   1369\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m-> 1370\u001b[0;31m     X = check_array(\n\u001b[0m\u001b[1;32m   1371\u001b[0m         \u001b[0mX\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m   1372\u001b[0m         \u001b[0maccept_sparse\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0maccept_sparse\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/sklearn/utils/validation.py\u001b[0m in \u001b[0;36mcheck_array\u001b[0;34m(array, accept_sparse, accept_large_sparse, dtype, order, copy, force_writeable, force_all_finite, ensure_all_finite, ensure_non_negative, ensure_2d, allow_nd, ensure_min_samples, ensure_min_features, estimator, input_name)\u001b[0m\n\u001b[1;32m    971\u001b[0m         \u001b[0;31m# Use the original dtype for conversion if dtype is None\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    972\u001b[0m         \u001b[0mnew_dtype\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mdtype_orig\u001b[0m \u001b[0;32mif\u001b[0m \u001b[0mdtype\u001b[0m \u001b[0;32mis\u001b[0m \u001b[0;32mNone\u001b[0m \u001b[0;32melse\u001b[0m \u001b[0mdtype\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 973\u001b[0;31m         \u001b[0marray\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0marray\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mastype\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mnew_dtype\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    974\u001b[0m         \u001b[0;31m# Since we converted here, we do not need to convert again later\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    975\u001b[0m         \u001b[0mdtype\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;32mNone\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/pandas/core/generic.py\u001b[0m in \u001b[0;36mastype\u001b[0;34m(self, dtype, copy, errors)\u001b[0m\n\u001b[1;32m   6641\u001b[0m         \u001b[0;32melse\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m   6642\u001b[0m             \u001b[0;31m# else, only a single dtype is given\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m-> 6643\u001b[0;31m             \u001b[0mnew_data\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0m_mgr\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mastype\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mdtype\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mdtype\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mcopy\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mcopy\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0merrors\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0merrors\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m   6644\u001b[0m             \u001b[0mres\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0m_constructor_from_mgr\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mnew_data\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0maxes\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mnew_data\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0maxes\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m   6645\u001b[0m             \u001b[0;32mreturn\u001b[0m \u001b[0mres\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0m__finalize__\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mself\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mmethod\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;34m\"astype\"\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/pandas/core/internals/managers.py\u001b[0m in \u001b[0;36mastype\u001b[0;34m(self, dtype, copy, errors)\u001b[0m\n\u001b[1;32m    428\u001b[0m             \u001b[0mcopy\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;32mFalse\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    429\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 430\u001b[0;31m         return self.apply(\n\u001b[0m\u001b[1;32m    431\u001b[0m             \u001b[0;34m\"astype\"\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    432\u001b[0m             \u001b[0mdtype\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mdtype\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/pandas/core/internals/managers.py\u001b[0m in \u001b[0;36mapply\u001b[0;34m(self, f, align_keys, **kwargs)\u001b[0m\n\u001b[1;32m    361\u001b[0m                 \u001b[0mapplied\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mb\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mapply\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mf\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m**\u001b[0m\u001b[0mkwargs\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    362\u001b[0m             \u001b[0;32melse\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 363\u001b[0;31m                 \u001b[0mapplied\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mgetattr\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mb\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mf\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m**\u001b[0m\u001b[0mkwargs\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    364\u001b[0m             \u001b[0mresult_blocks\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mextend_blocks\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mapplied\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mresult_blocks\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    365\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/pandas/core/internals/blocks.py\u001b[0m in \u001b[0;36mastype\u001b[0;34m(self, dtype, copy, errors, using_cow, squeeze)\u001b[0m\n\u001b[1;32m    756\u001b[0m             \u001b[0mvalues\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mvalues\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;36m0\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m:\u001b[0m\u001b[0;34m]\u001b[0m  \u001b[0;31m# type: ignore[call-overload]\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    757\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 758\u001b[0;31m         \u001b[0mnew_values\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mastype_array_safe\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mvalues\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mdtype\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mcopy\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mcopy\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0merrors\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0merrors\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    759\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    760\u001b[0m         \u001b[0mnew_values\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mmaybe_coerce_values\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mnew_values\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/pandas/core/dtypes/astype.py\u001b[0m in \u001b[0;36mastype_array_safe\u001b[0;34m(values, dtype, copy, errors)\u001b[0m\n\u001b[1;32m    235\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    236\u001b[0m     \u001b[0;32mtry\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 237\u001b[0;31m         \u001b[0mnew_values\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mastype_array\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mvalues\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mdtype\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mcopy\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mcopy\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    238\u001b[0m     \u001b[0;32mexcept\u001b[0m \u001b[0;34m(\u001b[0m\u001b[0mValueError\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mTypeError\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    239\u001b[0m         \u001b[0;31m# e.g. _astype_nansafe can fail on object-dtype of strings\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/pandas/core/dtypes/astype.py\u001b[0m in \u001b[0;36mastype_array\u001b[0;34m(values, dtype, copy)\u001b[0m\n\u001b[1;32m    180\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    181\u001b[0m     \u001b[0;32melse\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 182\u001b[0;31m         \u001b[0mvalues\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0m_astype_nansafe\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mvalues\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mdtype\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mcopy\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mcopy\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    183\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    184\u001b[0m     \u001b[0;31m# in pandas we don't store numpy str dtypes, so convert to object\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/pandas/core/dtypes/astype.py\u001b[0m in \u001b[0;36m_astype_nansafe\u001b[0;34m(arr, dtype, copy, skipna)\u001b[0m\n\u001b[1;32m    131\u001b[0m     \u001b[0;32mif\u001b[0m \u001b[0mcopy\u001b[0m \u001b[0;32mor\u001b[0m \u001b[0marr\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mdtype\u001b[0m \u001b[0;34m==\u001b[0m \u001b[0mobject\u001b[0m \u001b[0;32mor\u001b[0m \u001b[0mdtype\u001b[0m \u001b[0;34m==\u001b[0m \u001b[0mobject\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    132\u001b[0m         \u001b[0;31m# Explicit copy, or required since NumPy can't view from / to object.\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 133\u001b[0;31m         \u001b[0;32mreturn\u001b[0m \u001b[0marr\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mastype\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mdtype\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mcopy\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;32mTrue\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    134\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    135\u001b[0m     \u001b[0;32mreturn\u001b[0m \u001b[0marr\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mastype\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mdtype\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mcopy\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mcopy\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;31mValueError\u001b[0m: could not convert string to float: 'STON/O2. 3101270'"
           ]
         }
       ]
@@ -736,7 +697,7 @@
         "from sklearn.ensemble import RandomForestClassifier\n",
         "\n",
         "# Split the data into training and testing sets\n",
-        "X_train, X_test, y_train, y_test = train_test_split(data.drop('Survived', axis=1), data['Survived'], test_size=0.2, random_state=42)\n",
+        "X_train, X_test, y_train, y_test = train_test_split(data_encoded.drop('Survived', axis=1), data_encoded['Survived'], test_size=0.2, random_state=42)\n",
         "\n",
         "# Initialize and train the models\n",
         "logistic_regression = LogisticRegression()\n",
@@ -763,7 +724,7 @@
         "id": "BADbIEfj0XTG",
         "outputId": "759c3c3c-98f1-4ca9-db0c-2418f11b2f1f"
       },
-      "execution_count": 38,
+      "execution_count": null,
       "outputs": [
         {
           "output_type": "stream",
@@ -836,7 +797,7 @@
         "id": "3PeCO3fxxrs-",
         "outputId": "c5f6d9ac-9bf2-4a16-8cb2-a7bd0ff060dd"
       },
-      "execution_count": 39,
+      "execution_count": null,
       "outputs": [
         {
           "output_type": "stream",
@@ -866,14 +827,14 @@
       "metadata": {
         "id": "OACeF0kCh9nt"
       },
-      "execution_count": 41,
+      "execution_count": null,
       "outputs": []
     },
     {
       "cell_type": "code",
       "source": [
         "# Split the data into training and testing sets\n",
-        "X_train, X_test, y_train, y_test = train_test_split(data.drop('Survived', axis=1), data['Survived'], test_size=0.2, random_state=42)\n",
+        "X_train, X_test, y_train, y_test = train_test_split(data_encoded.drop('Survived', axis=1), data_encoded['Survived'], test_size=0.2, random_state=42)\n",
         "\n",
         "# Train a Random Forest model\n",
         "random_forest = RandomForestClassifier()\n",
@@ -921,7 +882,7 @@
         "id": "3hKpTkAkiHdM",
         "outputId": "e7a17f8d-6090-4636-f973-f2c2a1a95405"
       },
-      "execution_count": 42,
+      "execution_count": null,
       "outputs": [
         {
           "output_type": "stream",
