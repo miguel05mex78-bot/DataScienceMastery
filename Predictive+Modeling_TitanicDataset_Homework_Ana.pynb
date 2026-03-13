@@ -506,6 +506,11 @@
         "data_encoded = data_encoded.drop(columns=['Cabin'])\n",
         "data_encoded = data_encoded.drop(columns=['Ticket'])\n",
         "\n",
+        "# Notice PassengerId is included as a feature, so we need to drop it otherwise the scores will be 1\n",
+        "# PassengerId is unique for every passenger, so it basically encodes the target (Survived) if your train/test split happens to separate some IDs perfectly.\n",
+        "# Tree-based models (Decision Tree, Random Forest) can memorize unique identifiers and perfectly predict Survived in the test set if those IDs uniquely match the target.\n",
+        "# Logistic Regression can also fit perfectly if the data is tiny or the IDs give away the class.\n",
+        "data_encoded = data_encoded.drop(columns=['PassengerId'])\n",
         "\n",
         "# Final preprocessed dataset\n",
         "print(\"\\nPreprocessed dataset:\")\n",
@@ -610,6 +615,14 @@
     {
       "cell_type": "code",
       "source": [
+        "# Logistic Regression, Decision Tree, and Random Forest give 1.0\n",
+        "# A column derived from Survived\n",
+        "data_encoded.drop('Survived', axis=1)\n",
+        "print(data_encoded.columns)\n",
+        "print(X_train.columns)\n",
+        "# If Survived appears in X_train, the models will cheat and reach 100% accuracy\n",
+        "\n",
+        "\n",
         "\n",
         "# Split the data into training and testing sets\n",
         "X_train, X_test, y_train, y_test = train_test_split(data_encoded.drop('Survived', axis=1), data_encoded['Survived'], test_size=0.2, random_state=42)\n",
@@ -650,14 +663,20 @@
         "colab": {
           "base_uri": "https://localhost:8080/"
         },
-        "outputId": "16a61ca4-a5bc-44a3-953e-e0c1d64b6f4c"
+        "outputId": "2a7f88ab-b27b-432f-ad00-e32589528f5d"
       },
-      "execution_count": 67,
+      "execution_count": 68,
       "outputs": [
         {
           "output_type": "stream",
           "name": "stdout",
           "text": [
+            "Index(['PassengerId', 'Survived', 'Pclass', 'Age', 'SibSp', 'Parch',\n",
+            "       'Sex_male', 'Embarked_Q', 'Embarked_S', 'Fare_z_score'],\n",
+            "      dtype='object')\n",
+            "Index(['PassengerId', 'Pclass', 'Age', 'SibSp', 'Parch', 'Sex_male',\n",
+            "       'Embarked_Q', 'Embarked_S', 'Fare_z_score'],\n",
+            "      dtype='object')\n",
             "Model: Logistic Regression\n",
             "Accuracy: 1.0\n",
             "Precision: 1.0\n",
