@@ -1,0 +1,66 @@
+📊 Credit Risk Analysis & Decision Model
+
+A Data Science project for credit risk evaluation using Logistic Regression and Machine Learning.
+
+🚀 Overview
+
+This project develops a predictive model to determine whether a client should be granted credit, based on socioeconomic and financial variables.
+
+The dataset contains information on 700 clients, classified as:
+
+1 → Credit denied (default)
+0 → Credit approved
+
+The main objective is to build a data-driven decision rule that optimizes credit allocation and reduces financial risk.
+
+🎯 Objectives
+Build an interpretable model for credit risk analysis
+Identify key variables influencing credit decisions
+Develop a predictive model for new clients
+Evaluate performance from two perspectives:
+Explanatory (in-sample)
+Predictive (out-of-sample)
+📂 Dataset
+
+The dataset includes the following variables:
+
+Variable	Description
+x1	Age (years)
+x2	Education level (1–5)
+x3	Years with current employer
+x4	Years at current address
+x5	Household income (thousands)
+x6	Debt-to-income ratio
+x7	Credit card debt (thousands)
+x8	Other debt (thousands)
+x9	Previous default history
+default	Target variable (1 = denied, 0 = approved)
+⚙️ Methodology
+1. Logistic Regression
+Interpretable baseline model
+Estimates probability of default
+Analyzes the impact of each variable
+2. Machine Learning Models
+Comparison of predictive models
+Performance optimization
+Evaluation on unseen data
+📏 Model Evaluation
+🔍 Explanatory Analysis (Full Sample)
+
+Model fit evaluation using:
+
+Accuracy
+Confusion Matrix
+Sensitivity (Recall)
+Specificity
+
+Note: These metrics are used only as a measure of model fit.
+
+🚀 Predictive Analysis (New Data)
+
+Evaluation on test data:
+
+Accuracy
+Precision / Recall
+F1-score
+ROC-AUC
